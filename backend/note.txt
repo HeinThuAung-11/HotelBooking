@@ -1,0 +1,4 @@
+
+#to run with nodemon;
+
+nodemon ./bin/www
