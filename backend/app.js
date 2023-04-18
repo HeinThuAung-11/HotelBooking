@@ -6,12 +6,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 const { connectToMongoDB } = require('./config/mongodb');
+let auth = require('./middleware/auth');
 
 // Import routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var todosRouter = require('./routes/todos')
-
+var todosRouter = require('./routes/todos');
+let adminRouter = require('./routes/admin');
+let roomRouter = require('./routes/room');
 // Create the Express.js app
 var app = express();
 
@@ -30,10 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Call the connectDB function to connect with mongodb
 connectToMongoDB();
 // Routes
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/todos', todosRouter)
-
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/todos', auth.verifyUserToken, todosRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/rooms', auth.verifyUserToken, roomRouter)
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
