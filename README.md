@@ -1,11 +1,10 @@
 
-**strong text**Hotel Booking System
+## Hotel Booking System
 
 This is a full-stack hotel booking system built with React, Redux, Ant Design, Node.js, Express.js, and MongoDB.
 
-  
 
-**strong text**Features
+## Features
 
  - Users can search and book hotels.
    
@@ -13,9 +12,9 @@ This is a full-stack hotel booking system built with React, Redux, Ant Design, N
    
   - Authentication with JWT.
 
-**strong text**Getting Started
+## Getting Started
 
-- Clone the repository: git clone https://https://github.com/HeinThuAung-11/HotelBooking.
+- Clone the repository: git clone https://github.com/HeinThuAung-11/HotelBooking.
 
 - Navigate to the backend directory: cd backend.
 
@@ -35,11 +34,11 @@ This is a full-stack hotel booking system built with React, Redux, Ant Design, N
 
 - Navigate to http://localhost:3000 in your browser to access the app.
 
-**strong text**Technologies Used
+## Technologies Used
 
 - React
 
-vRedux
+- Redux
 
 - Ant Design
 
@@ -49,6 +48,6 @@ vRedux
 
 - MongoDB
 
-**strong text**License
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
