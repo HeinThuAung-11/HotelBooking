@@ -10,6 +10,7 @@ async function getAllRooms(req, res, next) {
 }
 
 async function getRoomsById(req, res, next) {
+  console.log('room id', req.params.id)
   try {
     const room = await adminRoomService.getRoomsById(req.params.id);
     if (!room) {
