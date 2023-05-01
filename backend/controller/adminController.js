@@ -36,8 +36,21 @@ const login = async function (req, res, next) {
 }
 const getUserById = async function (req, res, next) {
   console.log('Req ', req.params);
-  let userId = req.params.userId;
-  let user = userService.getUserById(userId);
+  let userId = req.params.id;
+  console.log(userId)
+  let user = await adminService.getUserById(userId);
+  console.log("user", user)
+  return res.status(200).json(user);
+}
+
+const getAllUsers = async function (req, res, next) {
+  let users = await adminService.getAllUsers();
+  return res.status(200).json(users);
+}
+const deleteUser = async function (req, res, next) {
+  console.log('Req ', req.params);
+  let userId = req.params.id;
+  let user = await adminService.deleteUser(userId);
   return res.status(200).json(user);
 }
 
@@ -45,4 +58,6 @@ module.exports = {
   getUserById,
   registerAdmin,
   login,
+  getAllUsers,
+  deleteUser
 }

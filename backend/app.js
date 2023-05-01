@@ -14,6 +14,7 @@ var usersRouter = require('./routes/users');
 var todosRouter = require('./routes/todos');
 let adminRouter = require('./routes/admin');
 let roomRouter = require('./routes/room');
+let bookingRouter = require('./routes/booking')
 // Create the Express.js app
 var app = express();
 
@@ -37,6 +38,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/todos', auth.verifyUserToken, todosRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/rooms', auth.verifyUserToken, roomRouter)
+app.use('/api/bookings', auth.verifyUserToken, bookingRouter)
+
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

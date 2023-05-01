@@ -11,4 +11,7 @@ router.get('/room/:id', adminRoom.getRoomsById);
 router.post('/room', adminRoom.saveRoom);
 router.put('/room/:id', adminRoom.updateRoom);
 router.delete('/room/:id', adminRoom.deleteRoom);
+router.get('/user', admin.getAllUsers);
+router.get('/user/:id', admin.getUserById);
+router.delete('/user/:id', admin.deleteUser);
 module.exports = router;

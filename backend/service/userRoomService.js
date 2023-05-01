@@ -1,8 +1,8 @@
 const Rooms = require('../model/rooms');
 
 async function getAllRooms() {
-  // const rooms = await Rooms.find().populate('bookings');
-  const rooms = await Rooms.find();
+  const rooms = await Rooms.find().populate('bookings');
+  // const rooms = await Rooms.find();
 
   return rooms;
 }

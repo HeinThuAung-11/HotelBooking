@@ -39,6 +39,8 @@ const roomSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Booking'
   }]
+}, {
+  strictPopulate: false // add this option to disable strict populate
 });
 
 module.exports = mongoose.model('Room', roomSchema);

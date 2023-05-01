@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const User = require('../model/user');
-
 const register = async (firstName, lastName, email, password) => {
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
@@ -33,14 +32,8 @@ const login = async (email, password) => {
   }
   throw Error("Invalid user or password");;
 };
-const getUserById = (userId) => {
-  return {
-    userId: userId,
-    name: "Some data from DB"
-  }
-};
+
 module.exports = {
-  getUserById,
   register,
   login,
 }

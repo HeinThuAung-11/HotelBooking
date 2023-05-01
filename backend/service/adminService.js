@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Admin = require('./../model/admin');
 const Room = require('./../model/rooms');
+const User = require('./../model/user')
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime-types');
@@ -17,7 +18,6 @@ const register = async (name, email, password) => {
 
 }
 const login = async (email, password) => {
-
   const filter = {
     email
   };
@@ -38,8 +38,8 @@ const login = async (email, password) => {
 
 
 async function getAllRooms() {
-  // const rooms = await Room.find().populate('bookings');
-  const rooms = await Room.find();
+  const rooms = await Room.find().populate('bookings');
+  // const rooms = await Room.find();
 
   return rooms;
 }
@@ -88,16 +88,34 @@ async function saveRoom(roomData) {
   return savedRoom;
 }
 
+// Update an existing room in the database
 async function updateRoom(id, roomData) {
-  console.log('roomdata', roomData)
   const updatedRoom = await Room.findByIdAndUpdate(id, roomData, { new: true });
   return updatedRoom;
 }
 
+// Delete a room from the database
 async function deleteRoom(id) {
   const deletedRoom = await Room.findByIdAndDelete(id);
   return deletedRoom;
 }
+// Get All User from the database
+async function getAllUsers() {
+  const users = await User.find()
+  return users;
+}
+// Delete a user from the database
+async function deleteUser(id) {
+  const deleteUser = await User.findByIdAndDelete(id);
+  return deleteUser;
+}
+
+// Get user by ID from the Database
+async function getUserById(id) {
+  const user = await User.findById(id);
+  return user;
+}
+// Export the functions for use in other modules
 module.exports = {
   getAllRooms,
   getRoomsById,
@@ -105,5 +123,8 @@ module.exports = {
   login,
   saveRoom,
   updateRoom,
-  deleteRoom
+  deleteRoom,
+  deleteUser,
+  getAllUsers,
+  getUserById
 }

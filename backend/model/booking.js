@@ -27,6 +27,8 @@ const bookingSchema = new mongoose.Schema({
     type: Number,
     required: true
   }
+}, {
+  strictPopulate: false // add this option to disable strict populate
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);
