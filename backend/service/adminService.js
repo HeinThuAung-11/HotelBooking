@@ -1,10 +1,10 @@
-const bcrypt = require('bcrypt');
-const Admin = require('./../model/admin');
-const Room = require('./../model/rooms');
-const User = require('./../model/user')
-const fs = require('fs');
-const path = require('path');
-const mime = require('mime-types');
+const bcrypt = require("bcrypt");
+const Admin = require("./../model/admin");
+const Room = require("./../model/rooms");
+const User = require("./../model/user");
+const fs = require("fs");
+const path = require("path");
+const mime = require("mime-types");
 
 const register = async (name, email, password) => {
   const salt = await bcrypt.genSalt(10);
@@ -15,30 +15,27 @@ const register = async (name, email, password) => {
     password: hashPassword,
   });
   return admin.save();
-
-}
+};
 const login = async (email, password) => {
   const filter = {
-    email
+    email,
   };
-  console.log('Filter ', filter, password);
+  console.log("Filter ", filter, password);
   const admin = await Admin.findOne(filter);
   if (admin) {
-    console.log('email ', email, " Password ", admin.password);
+    console.log("email ", email, " Password ", admin.password);
     const validPass = await bcrypt.compare(password, admin.password);
     if (validPass) {
       return admin;
-    }
-    else {
+    } else {
       throw Error("Invalid user or password");
     }
   }
-  throw Error("Invalid user or password");;
+  throw Error("Invalid user or password");
 };
 
-
 async function getAllRooms() {
-  const rooms = await Room.find().populate('bookings');
+  const rooms = await Room.find().populate("bookings");
   // const rooms = await Room.find();
 
   return rooms;
@@ -49,26 +46,27 @@ async function getRoomsById(id) {
   const room = await Room.findById(id);
   const imageBuffer = room.picture.data;
   const imageType = room.picture.contentType;
-  const imageDataUri = `data:${imageType};base64,${imageBuffer.toString('base64')}`;
-  console.log('room', room)
+  const imageDataUri = `data:${imageType};base64,${imageBuffer.toString(
+    "base64"
+  )}`;
+  console.log("room", room);
   room.picture = {
     data: imageDataUri,
-    contentType: imageType
+    contentType: imageType,
   };
-  console.log('room', room)
+  console.log("room", room);
 
   return room;
 }
 
 async function saveRoom(roomData) {
   // Get the file buffer and content type from the request
-  console.log("req file", roomData)
-  const imagePath = path.join(process.cwd(), 'img/2.jpeg');
+  console.log("req file", roomData);
+  const imagePath = path.join(process.cwd(), "img/2.jpeg");
   const imageBuffer = fs.readFileSync(imagePath);
   const contentType = mime.lookup(imagePath);
-  // const fileBuffer = req.file.buffer;
-  // const contentType = req.file.mimetype;
-  console.log('content type', contentType, imagePath)
+
+  console.log("content type", contentType, imagePath);
   // Create a new room document with the photo
   const newRoom = new Room({
     type: roomData.type,
@@ -77,10 +75,7 @@ async function saveRoom(roomData) {
     beds: roomData.beds,
     amenities: roomData.amenities,
     price: roomData.price,
-    picture: {
-      data: imageBuffer,
-      contentType: contentType
-    }
+    picture: {},
   });
 
   // Save the new room to the database
@@ -90,7 +85,9 @@ async function saveRoom(roomData) {
 
 // Update an existing room in the database
 async function updateRoom(id, roomData) {
-  const updatedRoom = await Room.findByIdAndUpdate(id, roomData, { new: true });
+  const updatedRoom = await Room.findByIdAndUpdate(id, roomData, {
+    new: true,
+  });
   return updatedRoom;
 }
 
@@ -101,7 +98,7 @@ async function deleteRoom(id) {
 }
 // Get All User from the database
 async function getAllUsers() {
-  const users = await User.find()
+  const users = await User.find();
   return users;
 }
 // Delete a user from the database
@@ -126,5 +123,5 @@ module.exports = {
   deleteRoom,
   deleteUser,
   getAllUsers,
-  getUserById
-}
+  getUserById,
+};

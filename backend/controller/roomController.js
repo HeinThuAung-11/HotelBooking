@@ -1,4 +1,4 @@
-const roomService = require('./../service/userRoomService');
+const roomService = require("./../service/userRoomService");
 
 async function getAllRooms(req, res, next) {
   try {
@@ -13,14 +13,13 @@ async function getRoomsById(req, res, next) {
   try {
     const room = await roomService.getRoomsById(req.params.id);
     if (!room) {
-      return res.status(404).json({ error: 'Room not found' });
+      return res.status(404).json({ error: "Room not found" });
     }
     res.json(room);
   } catch (err) {
     next(err);
   }
 }
-
 
 module.exports = {
   getAllRooms,
