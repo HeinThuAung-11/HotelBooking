@@ -1,46 +1,58 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const roomSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  capacity: {
-    type: Number,
-    required: true
-  },
-  beds: [{
+const roomSchema = new mongoose.Schema(
+  {
+    room_num: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     type: {
       type: String,
-      required: true
+      required: true,
     },
-    count: {
+    description: {
+      type: String,
+      required: true,
+    },
+    capacity: {
       type: Number,
-      required: true
-    }
-  }],
-  amenities: {
-    type: [String],
-    required: true
+      required: true,
+    },
+    beds: [
+      {
+        type: {
+          type: String,
+          required: true,
+        },
+        count: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    amenities: {
+      type: [String],
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    picture: {
+      data: Buffer,
+      contentType: String,
+    },
+    bookings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Booking",
+      },
+    ],
   },
-  price: {
-    type: Number,
-    required: true
-  },
-  picture: {
-    data: Buffer,
-    contentType: String
-  },
-  bookings: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Booking'
-  }]
-}, {
-  strictPopulate: false // add this option to disable strict populate
-});
+  {
+    strictPopulate: false, // add this option to disable strict populate
+  }
+);
 
-module.exports = mongoose.model('Room', roomSchema);
+module.exports = mongoose.model("Room", roomSchema);

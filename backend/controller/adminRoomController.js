@@ -1,4 +1,4 @@
-const adminRoomService = require('../service/adminService');
+const adminRoomService = require("../service/adminService");
 
 async function getAllRooms(req, res, next) {
   try {
@@ -10,11 +10,11 @@ async function getAllRooms(req, res, next) {
 }
 
 async function getRoomsById(req, res, next) {
-  console.log('room id', req.params.id)
+  console.log("room id", req.params.id);
   try {
     const room = await adminRoomService.getRoomsById(req.params.id);
     if (!room) {
-      return res.status(404).json({ error: 'Room not found' });
+      return res.status(404).json({ error: "Room not found" });
     }
     res.json(room);
   } catch (err) {
@@ -35,9 +35,12 @@ async function saveRoom(req, res, next) {
 // update room (admin only)
 async function updateRoom(req, res, next) {
   try {
-    const room = await adminRoomService.updateRoom(req.params.id, req.body);
+    const room = await adminRoomService.updateRoom(
+      req.params.id,
+      req.body
+    );
     if (!room) {
-      return res.status(404).json({ error: 'Room not found' });
+      return res.status(404).json({ error: "Room not found" });
     }
     res.json(room);
   } catch (err) {
@@ -50,7 +53,7 @@ async function deleteRoom(req, res, next) {
   try {
     const room = await adminRoomService.deleteRoom(req.params.id);
     if (!room) {
-      return res.status(404).json({ error: 'Room not found' });
+      return res.status(404).json({ error: "Room not found" });
     }
     res.json(room);
   } catch (err) {

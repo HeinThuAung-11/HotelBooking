@@ -1,4 +1,4 @@
-const bookingService = require('./../service/bookingService');
+const bookingService = require("./../service/bookingService");
 
 async function saveBooking(req, res, next) {
   try {
@@ -19,5 +19,5 @@ async function getAllBooking(req, res, next) {
 }
 module.exports = {
   saveBooking,
-  getAllBooking
-}
+  getAllBooking,
+};

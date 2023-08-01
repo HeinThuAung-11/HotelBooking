@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const Admin = require("./../model/admin");
 const Room = require("./../model/rooms");
 const User = require("./../model/user");
+const Booking = require("./../model/booking");
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime-types");
@@ -69,6 +70,7 @@ async function saveRoom(roomData) {
   console.log("content type", contentType, imagePath);
   // Create a new room document with the photo
   const newRoom = new Room({
+    room_num: roomData.room_num,
     type: roomData.type,
     description: roomData.description,
     capacity: roomData.capacity,
@@ -112,6 +114,15 @@ async function getUserById(id) {
   const user = await User.findById(id);
   return user;
 }
+
+//Get Booking from the Database
+
+async function getAllBooking() {
+  const booking = await Booking.find()
+    .populate("user")
+    .populate("room");
+  return booking;
+}
 // Export the functions for use in other modules
 module.exports = {
   getAllRooms,
@@ -124,4 +135,5 @@ module.exports = {
   deleteUser,
   getAllUsers,
   getUserById,
+  getAllBooking,
 };
