@@ -4,7 +4,7 @@ export const RoomList = ({ room }) => {
   const { amenities, description, price, type } = room;
 
   return (
-    <div className="h-[300px] grid grid-cols-3 grid-rows-1 mb-6  border-4 border-[#491098] rounded-lg">
+    <div className="h-fit grid grid-cols-3 grid-rows-1 mb-6  border-4 border-[#491098] rounded-lg">
       <img
         src={roomImage}
         alt="room"

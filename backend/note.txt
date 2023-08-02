@@ -2,3 +2,8 @@
 #to run with nodemon;
 
 nodemon ./bin/www
+
+URI=mongodb+srv://AyeMyat:ayemyatmongodb18!@hotelbooking.7kvwwvh.mongodb.net/HotelBooking?retryWrites=true&w=majority
+mongodb+srv://AyeMyat:ayemyatmongodb18!@hotelbooking.7kvwwvh.mongodb.net/?retryWrites=true&w=majority
+TOKEN_SECRET=46b88c53d0631b2d4b0f8bb4e4e45d64f319bf35ab91a8b0c65b26950c01a764bd6f02d421ec882cf6da9bb6e945a6a65dce2d9026f3c03a15b153af4151e54
+ADMIN_TOKEN_SECRET=qbu@n?TJgHV56nw*%f.yzFT*kjdfliajsdoif

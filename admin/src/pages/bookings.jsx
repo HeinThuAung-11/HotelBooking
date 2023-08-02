@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   fetchBooking,
   getAllBookings,
-} from "../features/bookingSlice";
+} from "../features/booking/bookingSlice";
 import { Display } from "../components/display";
 
 export const Bookings = () => {

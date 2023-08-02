@@ -12,6 +12,7 @@ import { Dashboard } from "./pages/dashboard";
 import { Rooms } from "./pages/rooms";
 import { Users } from "./pages/users";
 import { Bookings } from "./pages/bookings";
+import { injectStore } from "./settings/our_axios";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
+injectStore(store);
 root.render(
   <React.StrictMode>
     <Provider store={store}>

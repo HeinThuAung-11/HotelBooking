@@ -1,13 +1,28 @@
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
-import FormHelperText from "@mui/material/FormHelperText";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../app/hooks";
+import { apiLogin, selectAuth } from "../features/authSlice";
+import { useEffect } from "react";
 export const Login = () => {
   const { handleSubmit, register } = useForm({
     mode: "onTouched",
   });
+
+  let auth = useSelector(selectAuth);
+  const dispatch = useAppDispatch();
+  let navigate = useNavigate();
+  useEffect(() => {
+    console.log("Auth", auth);
+    if (auth) {
+      navigate("/dashboard/bookings");
+    }
+  });
   const onSubmit = (data) => {
     console.log(data);
+    dispatch(apiLogin(data));
   };
   return (
     <div className="w-[400px] h-[300px] bg-white rounded-lg p-6 flex flex-col justify-around items-center">

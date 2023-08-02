@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import hotelApi from "../api";
+import { apiGetAllRooms } from "./roomAPI";
 
 const initialState = {
   rooms: [],
@@ -7,7 +7,7 @@ const initialState = {
 export const fetchRoom = createAsyncThunk(
   "room/fetchRoom",
   async () => {
-    const response = await hotelApi.get("room");
+    const response = await apiGetAllRooms();
     return response.data;
   }
 );

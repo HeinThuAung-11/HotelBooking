@@ -1,6 +1,16 @@
 import { Link, Outlet } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { logout } from "../features/authSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export const Dashboard = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    console.log("Logout handler");
+    dispatch(logout());
+    navigate("/");
+  };
   return (
     <div className="grid grid-cols-5">
       <div className="col-span-1 bg-[#64748B] p-4 h-screen">
@@ -17,6 +27,9 @@ export const Dashboard = () => {
           <Link to={"users"} className="cursor-pointer">
             Users
           </Link>
+          <button onClick={logoutHandler} className="cursor-pointer">
+            Logout
+          </button>
         </div>
       </div>
 

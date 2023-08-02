@@ -1,7 +1,7 @@
 import { Dash } from "../components/dash";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchUser, getAllUsers } from "../features/userSlice";
+import { fetchUser, getAllUsers } from "../features/user/userSlice";
 import { Display } from "../components/display";
 
 export const Users = () => {

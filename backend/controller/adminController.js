@@ -20,7 +20,7 @@ const registerAdmin = async function (req, res, next) {
 const login = async function (req, res, next) {
   let email = req.body["email"];
   let password = req.body["password"];
-  console.log("login", password);
+  console.log("login", email, password);
   try {
     let admin = await adminService.login(email, password);
     let payload = { id: admin._id };

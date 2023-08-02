@@ -33,7 +33,7 @@ export const Searchroom = () => {
 
   return (
     <div
-      className="w-[300px] h-[700px] bg-background 
+      className="w-[300px] h-[500px] bg-background 
       flex flex-col items-center justify-evenly
       border-2 border-[#491098] rounded fixed">
       <div>
