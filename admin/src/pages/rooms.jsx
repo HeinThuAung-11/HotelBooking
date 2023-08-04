@@ -2,6 +2,8 @@ import { Dash } from "../components/dash";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchRoom, getAllRooms } from "../features/room/roomSlice";
+import { Display } from "../components/display";
+import { Title } from "../components/title";
 export const Rooms = () => {
   const dispatch = useAppDispatch();
   const rooms = useAppSelector(getAllRooms);
@@ -9,5 +11,9 @@ export const Rooms = () => {
     dispatch(fetchRoom());
   }, [dispatch]);
   console.log("roomns", rooms);
-  return <Dash>hello</Dash>;
+  return (
+    <Dash>
+      <Title />
+    </Dash>
+  );
 };

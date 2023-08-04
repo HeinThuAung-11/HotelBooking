@@ -12,6 +12,7 @@ router.post("/room", adminRoom.saveRoom);
 router.put("/room/:id", adminRoom.updateRoom);
 router.delete("/room/:id", adminRoom.deleteRoom);
 router.get("/booking", admin.getAllBookings);
+router.delete("/booking/:id", admin.deleteBooking);
 router.get("/user", admin.getAllUsers);
 router.get("/user/:id", admin.getUserById);
 router.delete("/user/:id", admin.deleteUser);

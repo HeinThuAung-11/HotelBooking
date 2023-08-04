@@ -14,8 +14,9 @@ export const Bookings = () => {
     dispatch(fetchBooking());
   }, [dispatch]);
   const modifiedBookings = bookings.map((booking) => {
-    const { check_in, check_out, room, user } = booking;
+    const { _id, check_in, check_out, room, user } = booking;
     return {
+      _id,
       check_in,
       check_out,
       room_num: room?.room_num || "N/A",
@@ -52,7 +53,11 @@ export const Bookings = () => {
   ];
   return (
     <Dash>
-      <Display columns={columns} rows={modifiedBookings} />
+      <Display
+        columns={columns}
+        rows={modifiedBookings}
+        deleteButton={true}
+      />
     </Dash>
   );
 };

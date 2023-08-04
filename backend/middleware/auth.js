@@ -28,7 +28,6 @@ const verifyUserToken = (req, res, next) => {
 
 const verifyAdminToken = (req, res, next) => {
   let token = req.headers.authorization;
-  console.log("Token ", token, req.headers);
   if (!token)
     return res
       .status(401)

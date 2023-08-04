@@ -40,15 +40,9 @@ const roomSchema = new mongoose.Schema(
       required: true,
     },
     picture: {
-      data: Buffer,
-      contentType: String,
+      data: { type: Buffer, required: true },
+      contentType: { type: String, required: true },
     },
-    bookings: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Booking",
-      },
-    ],
   },
   {
     strictPopulate: false, // add this option to disable strict populate

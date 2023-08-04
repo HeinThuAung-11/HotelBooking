@@ -59,6 +59,16 @@ const getAllBookings = async function (req, res, next) {
     next(err);
   }
 };
+const deleteBooking = async function (req, res, next) {
+  try {
+    console.log("Req", req.params.id);
+    let bookingId = req.params.id;
+    const booking = await adminService.deleteBooking(bookingId);
+    return res.status(200).json(booking);
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = {
   getUserById,
   registerAdmin,
@@ -66,4 +76,5 @@ module.exports = {
   getAllUsers,
   deleteUser,
   getAllBookings,
+  deleteBooking,
 };

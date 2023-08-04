@@ -7,14 +7,17 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
-export const Display = ({ columns, rows }) => {
+import Button from "@mui/material/Button";
+import { useAppDispatch } from "../app/hooks";
+import { deleteBooking } from "../features/booking/bookingSlice";
+
+export const Display = ({ columns, rows, deleteButton }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  const dispatch = useAppDispatch();
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -26,17 +29,23 @@ export const Display = ({ columns, rows }) => {
         width: "100%",
         overflow: "hidden",
         paddingLeft: "20px",
-        paddingRight: "20px",
+        backgroundColor: "#F5F6F8",
       }}>
-      <TableContainer sx={{ height: "94vh" }}>
+      <TableContainer
+        sx={{ height: "94vh" }}
+        style={{ fontWeight: 700 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
+                  sx={{ backgroundColor: "#F5F6F8" }}
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}>
+                  style={{
+                    minWidth: column.minWidth,
+                    fontWeight: 700,
+                  }}>
                   {column.label}
                 </TableCell>
               ))}
@@ -67,6 +76,17 @@ export const Display = ({ columns, rows }) => {
                         </TableCell>
                       );
                     })}
+                    {deleteButton === true && (
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        className="mt-4"
+                        onClick={() =>
+                          dispatch(deleteBooking(row._id))
+                        }>
+                        Delete
+                      </Button>
+                    )}
                   </TableRow>
                 );
               })}

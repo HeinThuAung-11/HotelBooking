@@ -4,8 +4,6 @@ const Room = require("./../model/rooms");
 const User = require("./../model/user");
 const Booking = require("./../model/booking");
 const fs = require("fs");
-const path = require("path");
-const mime = require("mime-types");
 
 const register = async (name, email, password) => {
   const salt = await bcrypt.genSalt(10);
@@ -17,6 +15,7 @@ const register = async (name, email, password) => {
   });
   return admin.save();
 };
+
 const login = async (email, password) => {
   const filter = {
     email,
@@ -61,13 +60,16 @@ async function getRoomsById(id) {
 }
 
 async function saveRoom(roomData) {
-  // Get the file buffer and content type from the request
-  console.log("req file", roomData);
-  const imagePath = path.join(process.cwd(), "img/2.jpeg");
-  const imageBuffer = fs.readFileSync(imagePath);
-  const contentType = mime.lookup(imagePath);
+  // Read the uploaded image file and convert it to a Buffer
+  const imageBuffer = fs.readFileSync(roomData.picture.path);
 
-  console.log("content type", contentType, imagePath);
+  // Create a new photo document with the binary data
+  const photoDocument = {
+    name: roomData.name || "Unnamed Photo",
+    description: roomData.description || "No description",
+    imageData: imageBuffer,
+  };
+
   // Create a new room document with the photo
   const newRoom = new Room({
     room_num: roomData.room_num,
@@ -77,11 +79,12 @@ async function saveRoom(roomData) {
     beds: roomData.beds,
     amenities: roomData.amenities,
     price: roomData.price,
-    picture: {},
+    picture: photoDocument,
   });
 
   // Save the new room to the database
   const savedRoom = await newRoom.save();
+  fs.unlinkSync(imageFile.path); // Delete the temporary image file
   return savedRoom;
 }
 
@@ -123,6 +126,13 @@ async function getAllBooking() {
     .populate("room");
   return booking;
 }
+
+// Delete a user from the database
+async function deleteBooking(id) {
+  const deleteBookikng = await Booking.findByIdAndDelete(id);
+  return deleteBookikng;
+}
+
 // Export the functions for use in other modules
 module.exports = {
   getAllRooms,
@@ -136,4 +146,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   getAllBooking,
+  deleteBooking,
 };
