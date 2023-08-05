@@ -3,8 +3,6 @@ const Admin = require("./../model/admin");
 const Room = require("./../model/rooms");
 const User = require("./../model/user");
 const Booking = require("./../model/booking");
-const fs = require("fs");
-
 const register = async (name, email, password) => {
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
@@ -44,33 +42,13 @@ async function getAllRooms() {
 async function getRoomsById(id) {
   // const room = await Room.findById(id).populate('bookings');
   const room = await Room.findById(id);
-  const imageBuffer = room.picture.data;
-  const imageType = room.picture.contentType;
-  const imageDataUri = `data:${imageType};base64,${imageBuffer.toString(
-    "base64"
-  )}`;
-  console.log("room", room);
-  room.picture = {
-    data: imageDataUri,
-    contentType: imageType,
-  };
-  console.log("room", room);
 
   return room;
 }
 
 async function saveRoom(roomData) {
-  // Read the uploaded image file and convert it to a Buffer
-  const imageBuffer = fs.readFileSync(roomData.picture.path);
-
-  // Create a new photo document with the binary data
-  const photoDocument = {
-    name: roomData.name || "Unnamed Photo",
-    description: roomData.description || "No description",
-    imageData: imageBuffer,
-  };
-
   // Create a new room document with the photo
+
   const newRoom = new Room({
     room_num: roomData.room_num,
     type: roomData.type,
@@ -79,12 +57,12 @@ async function saveRoom(roomData) {
     beds: roomData.beds,
     amenities: roomData.amenities,
     price: roomData.price,
-    picture: photoDocument,
+    picture: roomData.picture,
   });
 
   // Save the new room to the database
   const savedRoom = await newRoom.save();
-  fs.unlinkSync(imageFile.path); // Delete the temporary image file
+
   return savedRoom;
 }
 
