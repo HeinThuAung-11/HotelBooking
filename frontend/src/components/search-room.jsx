@@ -33,9 +33,9 @@ export const Searchroom = () => {
 
   return (
     <div
-      className="w-[300px] h-[500px] bg-background 
-      flex flex-col items-center justify-evenly
-      border-2 border-[#491098] rounded fixed">
+      className="w-[1000px] h-[120px] bg-background 
+      flex items-center justify-evenly
+      border-2 border-[#491098] rounded-lg ">
       <div>
         <FormControl variant="standard" className="w-[215px]">
           <label htmlFor="uncontrolled-native">RoomType</label>

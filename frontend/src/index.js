@@ -9,6 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Room } from "./pages/rooms";
+import { RoomDisplay } from "./pages/room-display";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/rooms",
     element: <Room />,
+  },
+  {
+    path: "/roomdisplay",
+    element: <RoomDisplay />,
   },
 ]);
 root.render(

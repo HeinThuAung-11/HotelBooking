@@ -7,7 +7,7 @@ export const Home = () => {
       style={{
         backgroundImage: `url(${homeImage})`,
       }}
-      className="h-screen w-full bg-cover text-background ">
+      className="h-screen w-full bg-cover text-background">
       <NavbarHome />
       <div
         className="flex flex-col items-center justify-evenly h-5/6
