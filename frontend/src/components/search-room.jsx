@@ -37,7 +37,9 @@ export const Searchroom = () => {
       flex items-center justify-evenly
       border-2 border-[#491098] rounded-lg ">
       <div>
-        <FormControl variant="standard" className="w-[215px]">
+        <FormControl
+          variant="standard"
+          className="w-[215px] h-[100px]">
           <label htmlFor="uncontrolled-native">RoomType</label>
           <NativeSelect
             defaultValue={null}
@@ -61,7 +63,10 @@ export const Searchroom = () => {
         </FormControl>
       </div>
       <div>
-        <FormControl variant="outlined" error={!!errors.amount}>
+        <FormControl
+          variant="outlined"
+          error={!!errors.amount}
+          className="h-[100px]">
           <label htmlFor="outlined-adornment-amount">Amount</label>
           <OutlinedInput
             id="outlined-adornment-amount"
@@ -77,7 +82,10 @@ export const Searchroom = () => {
         </FormControl>
       </div>
       <div>
-        <FormControl variant="outlined" error={!!errors.people}>
+        <FormControl
+          variant="outlined"
+          error={!!errors.people}
+          className="h-[100px]">
           <label htmlFor="outlined-adornment-people">People</label>
           <OutlinedInput
             id="outlined-adornment-people"
@@ -95,7 +103,7 @@ export const Searchroom = () => {
       <Button
         variant="outlined"
         onClick={handleSubmit(onSubmit)}
-        className="w-[215px]"
+        className="w-[215px] h-[50px]"
         sx={{
           color: "#ffffff", // Text color
           borderColor: "#491098", // Border color

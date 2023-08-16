@@ -47,7 +47,12 @@ const login = async (email, password) => {
   throw Error("Invalid user or password");
 };
 
+const getUserByIdService = async (userId) => {
+  const user = await User.findById(userId);
+  return user;
+};
 module.exports = {
   register,
   login,
+  getUserByIdService,
 };

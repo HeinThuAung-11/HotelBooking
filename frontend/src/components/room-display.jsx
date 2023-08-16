@@ -1,5 +1,5 @@
-import { Navbar } from "../components/navbar";
-import { Searchroom } from "../components/search-room";
+import { Navbar } from "./navbar";
+import { Searchroom } from "./search-room";
 import roomImage from "../images/roomtab.jpeg";
 export const RoomDisplay = () => {
   return (

@@ -8,9 +8,9 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Room } from "./pages/rooms";
-import { RoomDisplay } from "./pages/room-display";
-
+import { RoomPage } from "./pages/room-page";
+import { Login } from "./components/login";
+import { injectStore } from "./settings/our_axios";
 const container = document.getElementById("root");
 const root = createRoot(container);
 const router = createBrowserRouter([
@@ -19,14 +19,15 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/rooms",
-    element: <Room />,
+    path: "/roomdisplay",
+    element: <RoomPage />,
   },
   {
-    path: "/roomdisplay",
-    element: <RoomDisplay />,
+    path: "/login",
+    element: <Login />,
   },
 ]);
+injectStore(store);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
