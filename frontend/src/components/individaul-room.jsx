@@ -1,9 +1,19 @@
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Book from "./book";
 export const IndividualRoom = ({ room }) => {
-  const { amenities, description, price, type, picture } = room;
+  const {
+    _id,
+    amenities,
+    description,
+    price,
+    type,
+    picture,
+    room_num,
+    beds,
+  } = room;
   return (
     <div className="max-w-[1100px] w-full mx-auto border rounded-lg my-4">
       <img src={picture} className="aspect-video" alt="room" />
@@ -60,6 +70,24 @@ export const IndividualRoom = ({ room }) => {
             </div>
           </AccordionSummary>
           <AccordionDetails>
+            <div className=" grid grid-cols-2 mt-2">
+              <Typography variant="h5" gutterBottom>
+                Room No-{room_num}
+              </Typography>
+              <div>
+                {beds &&
+                  beds.map((bed, index) => {
+                    return (
+                      <Typography
+                        variant="h5"
+                        gutterBottom
+                        key={index}>
+                        {bed.type} Size Bed
+                      </Typography>
+                    );
+                  })}
+              </div>
+            </div>
             <p className="font-semibold text-xl">{description}</p>
             <ul className="list-inside list-disc grid grid-cols-2 mt-2">
               {amenities
@@ -74,12 +102,9 @@ export const IndividualRoom = ({ room }) => {
                   })
                 : null}
             </ul>
+
             <div className="flex justify-center mt-4">
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "#14274A" }}>
-                Book Now
-              </Button>
+              <Book roomId={_id} price={price} />
             </div>
           </AccordionDetails>
         </Accordion>

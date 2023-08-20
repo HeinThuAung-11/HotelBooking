@@ -2,7 +2,6 @@ import { Dash } from "../components/dash";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchRoom, getAllRooms } from "../features/room/roomSlice";
-import { Display } from "../components/display";
 import { Title } from "../components/title";
 export const Rooms = () => {
   const dispatch = useAppDispatch();

@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 export const Navbar = () => {
-  let auth = useSelector(selectAuth);
+  let { token } = useSelector(selectAuth);
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const getUserInfoFromToken = (token) => {
@@ -25,11 +25,11 @@ export const Navbar = () => {
     }
   };
   useEffect(() => {
-    if (auth) {
-      const userInfo = getUserInfoFromToken(auth);
+    if (token) {
+      const userInfo = getUserInfoFromToken(token);
       dispatch(apiGetUser(userInfo));
     }
-  }, [auth, dispatch]);
+  }, [token, dispatch]);
   return (
     <div className="grid grid-cols-2 text-background">
       <img
@@ -41,7 +41,7 @@ export const Navbar = () => {
         <Link to={"/"}>Home</Link>
         <Link to={"/roomdisplay"}>Room</Link>
         <Link to={"/rooms"}>Restuarant</Link>
-        {!auth ? (
+        {!token ? (
           <>
             <Link to={"/login"}>Login</Link>
             <Link to={"/register"}>Register</Link>

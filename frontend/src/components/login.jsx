@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import FormHelperText from "@mui/material/FormHelperText";
 import { useForm } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -25,14 +24,15 @@ const style = {
 };
 export const Login = () => {
   const dispatch = useAppDispatch();
-  let auth = useSelector(selectAuth);
+  let { token, status } = useSelector(selectAuth);
   let navigate = useNavigate();
   useEffect(() => {
-    console.log("Auth", auth);
-    if (auth) {
+    console.log("token", token);
+    if (token) {
       navigate("/roomdisplay");
     }
   });
+  console.log("status", status);
   const {
     handleSubmit,
     register,
@@ -41,6 +41,9 @@ export const Login = () => {
   const onSubmit = (data) => {
     console.log(data);
     dispatch(apiLogin(data));
+  };
+  const navigateRegister = () => {
+    navigate("/register");
   };
   return (
     <div
@@ -88,7 +91,6 @@ export const Login = () => {
                 label="Email"
                 type="email"
               />
-              <FormHelperText>{errors.Email?.message}</FormHelperText>
             </FormControl>
           </div>
 
@@ -111,9 +113,6 @@ export const Login = () => {
                 label="Password"
                 type="password"
               />
-              <FormHelperText>
-                {errors.password?.message}
-              </FormHelperText>
             </FormControl>
           </div>
         </div>
@@ -138,6 +137,32 @@ export const Login = () => {
             Login
           </Button>
         </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}>
+          <Button
+            variant="outlined"
+            onClick={navigateRegister}
+            className="w-[400px]"
+            sx={{
+              color: "#ffffff", // Text color
+              borderColor: "#1976D2", // Blue border color
+              backgroundColor: "#1976D2", // Blue background color
+              "&:hover": {
+                backgroundColor: "#1565C0", // Darker blue background color on hover
+              },
+            }}>
+            Register
+          </Button>
+        </div>
+        {status && status === "error" && (
+          <Typography variant="body1" color="error">
+            Incorrect email or password. Please try again.
+          </Typography>
+        )}
       </Box>
     </div>
   );

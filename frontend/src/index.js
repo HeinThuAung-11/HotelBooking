@@ -11,6 +11,7 @@ import {
 import { RoomPage } from "./pages/room-page";
 import { Login } from "./components/login";
 import { injectStore } from "./settings/our_axios";
+import { Register } from "./components/register";
 const container = document.getElementById("root");
 const root = createRoot(container);
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 injectStore(store);

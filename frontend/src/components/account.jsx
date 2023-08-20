@@ -18,7 +18,7 @@ export default function Account({ user }) {
   return (
     <Dropdown>
       <TriggerButton>
-        {user?.firstName + " " + user?.lastName}
+        {user && user?.firstName + " " + user?.lastName}
       </TriggerButton>
       <Menu slots={{ listbox: StyledListbox }}>
         <StyledMenuItem onClick={createHandleMenuClick("Profile")}>

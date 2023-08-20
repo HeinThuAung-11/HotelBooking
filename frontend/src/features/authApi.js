@@ -7,8 +7,17 @@ export function login(email, password) {
     password,
   });
 }
-
+export function register(user) {
+  const registerUrl = "http://localhost:3001/api/users/";
+  console.log("Final", user);
+  return axios.post(registerUrl, user);
+}
 export function getUserById(userId) {
   const loginUrl = "http://localhost:3001/api/users/";
   return axios.get(loginUrl + userId);
+}
+
+export function saveBooking(booking) {
+  const bookingUrl = "http://localhost:3001/api/bookings/";
+  return axios.post(bookingUrl, booking);
 }
