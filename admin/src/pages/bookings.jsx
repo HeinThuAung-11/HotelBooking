@@ -13,12 +13,16 @@ export const Bookings = () => {
   useEffect(() => {
     dispatch(fetchBooking());
   }, [dispatch]);
+  const dataFormat = (dateString) => {
+    const dateObject = new Date(dateString);
+    return dateObject.toISOString().split("T")[0];
+  };
   const modifiedBookings = bookings.map((booking) => {
     const { _id, check_in, check_out, room, user } = booking;
     return {
       _id,
-      check_in,
-      check_out,
+      check_in: dataFormat(check_in),
+      check_out: dataFormat(check_out),
       room_num: room?.room_num || "N/A",
       roomType: room?.type || "N/A",
       firstName: user?.firstName || "N/A",

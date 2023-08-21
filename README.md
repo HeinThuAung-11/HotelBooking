@@ -1,16 +1,13 @@
-
 ## Hotel Booking System
 
 This is a full-stack hotel booking system built with React, Redux, Ant Design, Node.js, Express.js, and MongoDB.
 
-
 ## Features
 
- - Users can search and book hotels.
-   
-  - Admins can manage hotels, rooms, and bookings.
-   
-  - Authentication with JWT.
+- Users can search and book hotels.
+- Admins can manage hotels, rooms, and bookings.
+
+- Authentication with JWT.
 
 ## Getting Started
 
@@ -40,7 +37,9 @@ This is a full-stack hotel booking system built with React, Redux, Ant Design, N
 
 - Redux
 
-- Ant Design
+- Material UI
+
+- Tailwind Css
 
 - Node.js
 
