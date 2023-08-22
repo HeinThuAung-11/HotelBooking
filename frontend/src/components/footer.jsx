@@ -10,12 +10,12 @@ export const Footer = () => {
         <p>royalgarden@gmail.com</p>
       </div>
 
-      <ul className="list-none flex flex-col justify-between ">
+      <ul className="list-none flex flex-col justify-between h-full">
         <li>About us</li>
         <li>Contact</li>
         <li>Terms and Conditions</li>
       </ul>
-      <ul className="list-none flex flex-col justify-between ">
+      <ul className="list-none flex flex-col justify-between h-full">
         <li>Facebook</li>
         <li>Twitter</li>
         <li>Instagram</li>
