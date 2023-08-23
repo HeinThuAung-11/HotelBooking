@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiGetAllRooms, apiSaveRoom } from "./roomAPI";
+import {
+  apiDeleteRoom,
+  apiGetAllRooms,
+  apiSaveRoom,
+  apiUpdateRoom,
+} from "./roomAPI";
 
 const initialState = {
   rooms: [],
@@ -22,6 +27,24 @@ export const saveRoom = createAsyncThunk(
   }
 );
 
+export const updateRoom = createAsyncThunk(
+  "room/updateRoom",
+  async (room) => {
+    console.log("update room", room);
+    const response = await apiUpdateRoom(room, room._id);
+    console.log("response", response);
+    return response.data;
+  }
+);
+export const deleteRoom = createAsyncThunk(
+  "room/deleteRoom",
+  async (roomId) => {
+    console.log("Delete room", roomId);
+    const response = await apiDeleteRoom(roomId);
+    console.log("response", response);
+    return response.data;
+  }
+);
 export const roomSlice = createSlice({
   name: "room",
   initialState,

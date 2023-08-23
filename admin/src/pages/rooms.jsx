@@ -1,9 +1,14 @@
 import { Dash } from "../components/dash";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchRoom, getAllRooms } from "../features/room/roomSlice";
+import {
+  deleteRoom,
+  fetchRoom,
+  getAllRooms,
+} from "../features/room/roomSlice";
 import { Title } from "../components/title";
 import { Button } from "@mui/material";
+import { EditModal } from "../components/edit-modal";
 
 export const Rooms = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +17,10 @@ export const Rooms = () => {
     dispatch(fetchRoom());
   }, [dispatch]);
   console.log("roomns", rooms);
+  const handleDeleteRoom = async (room) => {
+    await dispatch(deleteRoom(room._id));
+    dispatch(fetchRoom());
+  };
   return (
     <Dash>
       <Title />
@@ -29,7 +38,7 @@ export const Rooms = () => {
                     height={180}
                     className="col-span-1"
                   />
-                  <div className="col-span-2 p-8 font-semibold text-lg">
+                  <div className="col-span-2 pl-4 font-semibold text-lg">
                     <p>Room Number : {room.room_num}</p>
                     <p>Type : {room.type}</p>
                     <p>Price : $ {room.price}</p>
@@ -50,26 +59,21 @@ export const Rooms = () => {
                         </p>
                       ))}
                     </p>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        width: "160px",
-                        height: "42px",
-                        borderRadius: "4px",
-                      }}>
-                      Edit
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      sx={{
-                        width: "160px",
-                        height: "42px",
-                        borderRadius: "4px",
-                        marginLeft: "10px",
-                      }}>
-                      Delete
-                    </Button>
+                    <div className="flex mt-2">
+                      <EditModal room={room} />
+                      <Button
+                        onClick={() => handleDeleteRoom(room)}
+                        variant="contained"
+                        color="error"
+                        sx={{
+                          width: "160px",
+                          height: "42px",
+                          borderRadius: "4px",
+                          marginLeft: "10px",
+                        }}>
+                        Delete
+                      </Button>
+                    </div>
                   </div>
                 </div>
               );

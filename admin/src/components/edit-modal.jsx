@@ -15,7 +15,7 @@ import { useState } from "react";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useAppDispatch } from "../app/hooks";
-import { fetchRoom, saveRoom } from "../features/room/roomSlice";
+import { fetchRoom, updateRoom } from "../features/room/roomSlice";
 const style = {
   position: "absolute",
   top: "50%",
@@ -31,25 +31,40 @@ const style = {
   overflow: "scroll",
 };
 
-export function CreateModal({ open, handleClose, setOpen }) {
+export function EditModal({ room }) {
   const [image, setImage] = useState(null);
   const dispatch = useAppDispatch();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const {
+    _id,
+    room_num,
+    type,
+    description,
+    picture,
+    capacity,
+    price,
+    beds,
+    amenities,
+  } = room;
+  let amenitiesModified = amenities.map((ameni) => ({ name: ameni }));
   const {
     handleSubmit,
     register,
     control,
-    reset,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
     defaultValues: {
-      beds: [{ type: "", count: "" }],
-      amenities: [{ name: "" }],
-      type: "", // Reset 'type' input
-      room_num: "", // Reset 'room_num' input
-      price: "", // Reset 'price' input
-      capacity: "", // Reset 'capacity' input
-      description: "", // Reset 'description' input
+      beds: beds,
+      amenities: amenitiesModified,
+      type: type,
+      room_num: room_num,
+      price: price,
+      capacity: capacity,
+      description: description,
     },
   });
   const {
@@ -69,46 +84,62 @@ export function CreateModal({ open, handleClose, setOpen }) {
     name: "amenities",
   });
   const onSubmit = async (data) => {
-    try {
-      const amenities = data.amenities;
-      const amenitiesArray = amenities.map((item) => item.name);
-      const date = new Date();
-      const imageRef = ref(
-        storage,
-        `/images/${image.name + date.getTime()}`
-      );
+    console.log("Edit data", data, picture);
+    const amenities = data.amenities;
+    const amenitiesArray = amenities.map((item) => item.name);
+    const date = new Date();
 
-      await uploadBytes(imageRef, image);
+    if (image) {
+      try {
+        const imageRef = ref(
+          storage,
+          `/images/${image.name + date.getTime()}`
+        );
+        await uploadBytes(imageRef, image);
+        const url = await getDownloadURL(imageRef);
 
-      const url = await getDownloadURL(imageRef);
+        const updatedData = {
+          ...data,
+          picture: url,
+          room_num: parseInt(data.room_num),
+          amenities: amenitiesArray,
+          _id,
+        };
 
-      const updatedData = {
+        console.log(updatedData);
+        await dispatch(updateRoom(updatedData));
+        handleClose(false);
+        dispatch(fetchRoom());
+      } catch (error) {
+        console.log(error.message, "error getting the image url");
+      }
+    } else {
+      let updatedData = {
         ...data,
+        picture,
+        room_num: parseInt(data.room_num),
         amenities: amenitiesArray,
-        picture: url,
+        _id,
       };
-
-      console.log(updatedData);
-      await dispatch(saveRoom(updatedData));
+      console.log("Updated data else", updatedData, _id);
+      await dispatch(updateRoom(updatedData));
       handleClose(false);
       dispatch(fetchRoom());
-
-      reset({
-        beds: [{ type: "", count: "" }],
-        amenities: [{ name: "" }],
-        type: "", // Reset 'type' input
-        room_num: "", // Reset 'room_num' input
-        price: "", // Reset 'price' input
-        capacity: "", // Reset 'capacity' input
-        description: "", // Reset 'description' input
-      });
-    } catch (error) {
-      console.log(error.message, "error getting the image url");
     }
   };
 
   return (
     <div>
+      <Button
+        variant="contained"
+        onClick={handleOpen}
+        sx={{
+          width: "160px",
+          height: "42px",
+          borderRadius: "4px",
+        }}>
+        Edit
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -127,7 +158,7 @@ export function CreateModal({ open, handleClose, setOpen }) {
               variant="h4"
               gutterBottom
               sx={{ textAlign: "center" }}>
-              Create Room
+              Edit Room
             </Typography>
             <button
               className="w-12 h-12 right-0 absolute top-2"
@@ -180,9 +211,13 @@ export function CreateModal({ open, handleClose, setOpen }) {
                   </label>
                   <OutlinedInput
                     id="outlined-adornment-room_num"
-                    {...register("room_num", {
-                      required: "Room Number is required",
-                    })}
+                    {...register(
+                      "room_num",
+
+                      {
+                        required: "Room Number is required",
+                      }
+                    )}
                     startAdornment={
                       <InputAdornment position="start"></InputAdornment>
                     }
@@ -203,9 +238,13 @@ export function CreateModal({ open, handleClose, setOpen }) {
                   </label>
                   <OutlinedInput
                     id="outlined-adornment-price"
-                    {...register("price", {
-                      required: "Price is required",
-                    })}
+                    {...register(
+                      "price",
+
+                      {
+                        required: "Price is required",
+                      }
+                    )}
                     startAdornment={
                       <InputAdornment position="start"></InputAdornment>
                     }
@@ -226,9 +265,13 @@ export function CreateModal({ open, handleClose, setOpen }) {
                   </label>
                   <OutlinedInput
                     id="outlined-adornment-capacity"
-                    {...register("capacity", {
-                      required: "Capacity is required",
-                    })}
+                    {...register(
+                      "capacity",
+
+                      {
+                        required: "Capacity is required",
+                      }
+                    )}
                     startAdornment={
                       <InputAdornment position="start"></InputAdornment>
                     }
@@ -246,12 +289,15 @@ export function CreateModal({ open, handleClose, setOpen }) {
                   className="w-full">
                   <TextField
                     id="outlined-adornment-description"
-                    {...register("description", {
-                      required: "Description is required",
-                    })}
+                    {...register(
+                      "description",
+
+                      {
+                        required: "Description is required",
+                      }
+                    )}
                     label="Description"
                     multiline
-                    rows={3}
                     placeholder="Description of the Room"
                   />
                   <FormHelperText>
@@ -384,7 +430,7 @@ export function CreateModal({ open, handleClose, setOpen }) {
                     backgroundColor: "#45a049", // Darker green background color on hover
                   },
                 }}>
-                Create Room
+                Edit Room
               </Button>
             </div>
           </Box>
