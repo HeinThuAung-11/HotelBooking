@@ -1,8 +1,7 @@
 import { Navbar } from "./navbar";
-import { Searchroom } from "./search-room";
-import roomImage from "../images/roomtab.jpeg";
+import roomImage from "../images/home.png";
 
-export const RoomDisplay = () => {
+export const HomeDisplay = () => {
   return (
     <div
       style={{
@@ -19,9 +18,6 @@ export const RoomDisplay = () => {
             Book your stay and enjoy Luxury redefined at the most
             affordable rates.
           </p>
-        </div>
-        <div className="flex justify-center h-1/6">
-          <Searchroom />
         </div>
       </div>
     </div>

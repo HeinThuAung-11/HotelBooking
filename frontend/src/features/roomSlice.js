@@ -3,6 +3,7 @@ import hotelApi from "../api";
 
 const initialState = {
   rooms: [],
+  filteredRooms: [],
 };
 export const fetchRoom = createAsyncThunk(
   "room/fetchRoom",
@@ -15,7 +16,15 @@ export const fetchRoom = createAsyncThunk(
 export const roomSlice = createSlice({
   name: "room",
   initialState,
-  reducers: {},
+  reducers: {
+    filteringRooms: (state, action) => {
+      console.log("filtering roonms", state, action);
+      state.filteredRooms = action.payload;
+    },
+    cancelFilteredRooms: (state) => {
+      state.filteredRooms = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchRoom.fulfilled, (state, action) => {
       console.log(
@@ -28,4 +37,7 @@ export const roomSlice = createSlice({
   },
 });
 export const getAllRooms = (state) => state.rooms.rooms;
+export const getFilteredRooms = (state) => state.rooms.filteredRooms;
+export const { filteringRooms, cancelFilteredRooms } =
+  roomSlice.actions;
 export default roomSlice.reducer;

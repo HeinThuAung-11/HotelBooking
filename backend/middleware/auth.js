@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const verifyUserToken = (req, res, next) => {
   let token = req.headers.authorization;
-  console.log("Token ", token);
+  // console.log("Token ", token);
   if (!token)
     return res
       .status(401)
@@ -17,7 +17,7 @@ const verifyUserToken = (req, res, next) => {
     let verifiedUser = jwt.verify(token, process.env.TOKEN_SECRET); // config.TOKEN_SECRET => 'secretKey'
     if (!verifiedUser)
       return res.status(401).send("Unauthorized request");
-    console.log("verfied user", verifiedUser);
+    // console.log("verfied user", verifiedUser);
     req.user = verifiedUser; // user_id
     next();
   } catch (error) {

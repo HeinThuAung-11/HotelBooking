@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserById, login, register, saveBooking } from "./authApi";
+import {
+  deleteBookingById,
+  getBookingByUserId,
+  getUserById,
+  login,
+  register,
+  saveBooking,
+  updateBookingById,
+} from "./authApi";
 const initialState = {
   token: localStorage.getItem("userAuthToken") || null,
   user: null,
@@ -43,6 +51,34 @@ export const apiSaveBooking = createAsyncThunk(
     return response.data;
   }
 );
+export const apiGetBookingByUserId = createAsyncThunk(
+  "auth/getBooking",
+  async (userId) => {
+    console.log("booking userid", userId);
+    const response = await getBookingByUserId(userId);
+    console.log("responese booking", response);
+    return response.data;
+  }
+);
+
+export const apiDeleteBooking = createAsyncThunk(
+  "auth/deleteBooking",
+  async (id) => {
+    console.log("bookingdel id", id);
+    const response = await deleteBookingById(id);
+    console.log("responese booking", response);
+    return response.data;
+  }
+);
+export const apiUpdateBooking = createAsyncThunk(
+  "auth/updateBooking",
+  async (booking) => {
+    console.log("bookingdel booking", booking);
+    const response = await updateBookingById(booking._id, booking);
+    console.log("responese booking", response);
+    return response.data;
+  }
+);
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -55,7 +91,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(apiLogin.fulfilled, (state, action) => {
-      console.log("Api fullfilled ", action.payload);
+      // console.log("Api fullfilled ", action.payload);
       if (action.payload.token) {
         state.token = action.payload.token;
         state.status = "success";
@@ -63,7 +99,7 @@ export const authSlice = createSlice({
       }
     });
     builder.addCase(apiRegister.fulfilled, (state, action) => {
-      console.log("Api fullfilled ", action.payload);
+      // console.log("Api fullfilled ", action.payload);
       if (action.payload.token) {
         state.token = action.payload.token;
         state.status = "success";
@@ -77,12 +113,20 @@ export const authSlice = createSlice({
       state.status = "error";
     });
     builder.addCase(apiGetUser.fulfilled, (state, action) => {
-      console.log("Api fullfilled ", action.payload);
+      // console.log("Api fullfilled ", action.payload);
       state.user = action.payload;
     });
+    builder.addCase(
+      apiGetBookingByUserId.fulfilled,
+      (state, action) => {
+        console.log("Api fullfilled ", action.payload);
+        state.booking = action.payload;
+      }
+    );
   },
 });
 export const { logout } = authSlice.actions;
 export const selectAuth = (state) => state.auth;
 export const selectUser = (state) => state.auth.user;
+export const selectBooking = (state) => state.auth.booking;
 export default authSlice.reducer;

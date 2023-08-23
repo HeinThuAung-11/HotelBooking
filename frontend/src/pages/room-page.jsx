@@ -2,11 +2,17 @@ import { IndividualRoom } from "../components/individaul-room";
 import { RoomDisplay } from "../components/room-display";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchRoom, getAllRooms } from "../features/roomSlice";
+import {
+  fetchRoom,
+  getAllRooms,
+  getFilteredRooms,
+} from "../features/roomSlice";
 import { Footer } from "../components/footer";
 export const RoomPage = () => {
   const dispatch = useAppDispatch();
   const rooms = useAppSelector(getAllRooms);
+  const filteredRooms = useAppSelector(getFilteredRooms);
+  console.log("filterroom", filteredRooms);
   useEffect(() => {
     dispatch(fetchRoom());
   }, [dispatch]);
@@ -27,11 +33,16 @@ export const RoomPage = () => {
           windows and terraces.{" "}
         </p>
       </div>
-      {rooms
+      {filteredRooms.length > 0
+        ? filteredRooms.map((room, index) => {
+            return <IndividualRoom room={room} key={room + index} />;
+          })
+        : rooms
         ? rooms.map((room, index) => {
             return <IndividualRoom room={room} key={room + index} />;
           })
         : null}
+
       <Footer />
     </>
   );

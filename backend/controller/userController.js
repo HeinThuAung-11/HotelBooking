@@ -31,7 +31,7 @@ const registerUser = async function (req, res, next) {
 const login = async function (req, res, next) {
   let email = req.body["email"];
   let password = req.body["password"];
-  console.log("login", email, password);
+  // console.log("login", email, password);
   try {
     let user = await userService.login(email, password);
     let payload = { id: user._id };
@@ -43,10 +43,10 @@ const login = async function (req, res, next) {
   }
 };
 const getUserById = async function (req, res, next) {
-  console.log("Req ", req.params);
+  // console.log("Req ", req.params);
   let userId = req.params.userId;
   let user = await userService.getUserByIdService(userId);
-  console.log("Getuserbyid", user, userId);
+  // console.log("Getuserbyid", user, userId);
   return res.status(200).json(user);
 };
 

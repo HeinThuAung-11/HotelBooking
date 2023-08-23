@@ -7,11 +7,14 @@ import { useForm } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
+  apiGetBookingByUserId,
   apiLogin,
   apiSaveBooking,
   selectAuth,
+  selectUser,
+  selectUserId,
 } from "../features/authSlice";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
@@ -32,6 +35,7 @@ const style = {
 
 export default function Book({ roomId, price }) {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -59,7 +63,7 @@ export default function Book({ roomId, price }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     let booking = {
       num_guests: data.guest,
       room: roomId,
@@ -68,7 +72,8 @@ export default function Book({ roomId, price }) {
       total_price: Math.round(days * price),
     };
     console.log("Bookingdata", booking);
-    dispatch(apiSaveBooking(booking));
+    await dispatch(apiSaveBooking(booking));
+    dispatch(apiGetBookingByUserId(user?._id));
   };
   return (
     <div>

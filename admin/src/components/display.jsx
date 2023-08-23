@@ -80,7 +80,7 @@ export const Display = ({ columns, rows, deleteButton }) => {
                       <Button
                         variant="outlined"
                         color="error"
-                        className="mt-4"
+                        sx={{ marginTop: "8px" }}
                         onClick={() =>
                           dispatch(deleteBooking(row._id))
                         }>

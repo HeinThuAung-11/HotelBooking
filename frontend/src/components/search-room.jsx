@@ -7,6 +7,14 @@ import Button from "@mui/material/Button";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useForm } from "react-hook-form";
 
+import {
+  filteringRooms,
+  getAllRooms,
+  getFilteredRooms,
+  cancelFilteredRooms,
+} from "../features/roomSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+
 const roomType = [
   "Standard Room",
   "Deluxe Room",
@@ -19,6 +27,9 @@ const roomType = [
 ];
 
 export const Searchroom = () => {
+  const rooms = useAppSelector(getAllRooms);
+  const dispatch = useAppDispatch();
+  const filteredRooms = useAppSelector(getFilteredRooms);
   const {
     handleSubmit,
     register,
@@ -28,9 +39,18 @@ export const Searchroom = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data, rooms[0]);
+    const filterdRoom = rooms.filter((room) => {
+      return (
+        room.type === data.RoomType &&
+        room.price <= data.amount &&
+        rooms[0].capacity === parseInt(data.people)
+      );
+    });
+    console.log("filter", filterdRoom);
+    dispatch(filteringRooms(filterdRoom));
   };
-
+  console.log("Search filted rooms", filteredRooms);
   return (
     <div
       className="w-[1000px] h-[120px] bg-background 
@@ -100,20 +120,37 @@ export const Searchroom = () => {
           <FormHelperText>{errors.people?.message}</FormHelperText>
         </FormControl>
       </div>
-      <Button
-        variant="outlined"
-        onClick={handleSubmit(onSubmit)}
-        className="w-[215px] h-[50px]"
-        sx={{
-          color: "#ffffff", // Text color
-          borderColor: "#491098", // Border color
-          backgroundColor: "#491098", // Background color
-          "&:hover": {
-            backgroundColor: "#330961", // Background color on hover
-          },
-        }}>
-        Search Rooms
-      </Button>
+      {filteredRooms.length > 0 ? (
+        <Button
+          variant="outlined"
+          onClick={() => dispatch(cancelFilteredRooms())}
+          className="w-[215px] h-[50px]"
+          sx={{
+            color: "#ffffff", // Text color
+            borderColor: "#14274A", // Updated border color
+            backgroundColor: "#14274A", // Background color
+            "&:hover": {
+              backgroundColor: "#0F1E3B", // Darker background color on hover
+            },
+          }}>
+          Cancel Filtering
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          onClick={handleSubmit(onSubmit)}
+          className="w-[215px] h-[50px]"
+          sx={{
+            color: "#ffffff", // Text color
+            borderColor: "#14274A", // Updated border color
+            backgroundColor: "#14274A", // Background color
+            "&:hover": {
+              backgroundColor: "#0F1E3B", // Darker background color on hover
+            },
+          }}>
+          Search Rooms
+        </Button>
+      )}
     </div>
   );
 };

@@ -40,7 +40,7 @@ export const Navbar = () => {
       <div className="col-span-1 flex items-center justify-evenly font-semibold text-lg">
         <Link to={"/"}>Home</Link>
         <Link to={"/roomdisplay"}>Room</Link>
-        <Link to={"/rooms"}>Restuarant</Link>
+        <Link to={"/"}>Facilities</Link>
         {!token ? (
           <>
             <Link to={"/login"}>Login</Link>

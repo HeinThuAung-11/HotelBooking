@@ -4,15 +4,18 @@ import { Menu } from "@mui/base/Menu";
 import { MenuButton } from "@mui/base/MenuButton";
 import { MenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { logout } from "../features/authSlice";
+import ProfileModal from "./profile";
 
 export default function Account({ user }) {
   const dispatch = useAppDispatch();
-  const createHandleMenuClick = (menuItem) => {
-    return () => {
-      console.log(`Clicked on ${menuItem}`);
-    };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -21,13 +24,18 @@ export default function Account({ user }) {
         {user && user?.firstName + " " + user?.lastName}
       </TriggerButton>
       <Menu slots={{ listbox: StyledListbox }}>
-        <StyledMenuItem onClick={createHandleMenuClick("Profile")}>
-          Profile
+        <StyledMenuItem onClick={() => handleOpen(true)}>
+          Booking
         </StyledMenuItem>
         <StyledMenuItem onClick={() => dispatch(logout())}>
           Log out
         </StyledMenuItem>
       </Menu>
+      <ProfileModal
+        open={open}
+        handleClose={handleClose}
+        userId={user?._id}
+      />
     </Dropdown>
   );
 }
