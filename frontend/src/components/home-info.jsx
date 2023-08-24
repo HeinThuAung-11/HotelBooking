@@ -3,7 +3,7 @@ import home2 from "./../images/home2.png";
 export const HomeInfo = () => {
   return (
     <div className="max-w-[1600px] mx-auto">
-      <h1 className="text-center my-10 gap-6">
+      <h1 className="text-center my-10 gap-6 text-xl font-semibold  ">
         All our room types include complementary breakfast
       </h1>
       <div className="grid grid-cols-12">
