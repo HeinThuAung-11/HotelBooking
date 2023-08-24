@@ -73,8 +73,8 @@ export const apiDeleteBooking = createAsyncThunk(
 export const apiUpdateBooking = createAsyncThunk(
   "auth/updateBooking",
   async (booking) => {
-    console.log("bookingdel booking", booking);
-    const response = await updateBookingById(booking._id, booking);
+    const bookingId = booking.bookingId;
+    const response = await updateBookingById(bookingId, booking);
     console.log("responese booking", response);
     return response.data;
   }

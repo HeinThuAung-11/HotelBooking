@@ -10,13 +10,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   apiGetBookingByUserId,
-  apiSaveBooking,
+  apiUpdateBooking,
   selectUser,
 } from "../features/authSlice";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { Payment } from "./payment";
 
 const style = {
   position: "absolute",
@@ -24,14 +23,18 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 800,
-  height: 650,
+  height: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
-export default function Book({ roomId, price }) {
+export default function EditBookiing({ booking }) {
+  console.log("booking from editbookiong", booking);
+  const roomId = booking.room._id;
+  const price = booking.room.price;
+  const bookingId = booking._id;
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [open, setOpen] = React.useState(false);
@@ -63,6 +66,7 @@ export default function Book({ roomId, price }) {
 
   const onSubmit = async (data) => {
     let booking = {
+      bookingId: bookingId,
       num_guests: data.guest,
       room: roomId,
       check_in: selectionRange.startDate,
@@ -70,16 +74,24 @@ export default function Book({ roomId, price }) {
       total_price: Math.round(days * price),
     };
     console.log("Bookingdata", booking);
-    await dispatch(apiSaveBooking(booking));
+    await dispatch(apiUpdateBooking(booking));
     dispatch(apiGetBookingByUserId(user?._id));
   };
   return (
     <div>
       <Button
-        variant="contained"
+        variant="outlined"
         onClick={handleOpen}
-        style={{ backgroundColor: "#14274A" }}>
-        Book Now
+        className="w-[165px] h-[40px]"
+        sx={{
+          color: "#ffffff", // Text color
+          borderColor: "#14274A", // Updated border color
+          backgroundColor: "#14274A", // Background color
+          "&:hover": {
+            backgroundColor: "#0F1E3B", // Darker background color on hover
+          },
+        }}>
+        Edit Booking
       </Button>
       <Modal
         open={open}
@@ -161,7 +173,6 @@ export default function Book({ roomId, price }) {
               </FormControl>
             </div>
           </div>
-          <Payment />
           <div className="flex items-center justify-center mt-3">
             <Button
               variant="contained"
@@ -171,7 +182,7 @@ export default function Book({ roomId, price }) {
                 handleSubmit(onSubmit)(); // Call the form submission handler
                 setOpen(false); // Close the modal
               }}>
-              Book Now
+              Edit Booking
             </Button>
           </div>
         </Box>

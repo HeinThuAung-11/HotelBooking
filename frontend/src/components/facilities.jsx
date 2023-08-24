@@ -1,16 +1,16 @@
 import { Navbar } from "./navbar";
-import roomImage from "../images/home.png";
+import facilityImage from "../images/facilities.png";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { HomeInfo } from "./home-info";
-
-export const HomeDisplay = () => {
+import { Footer } from "./footer";
+import { FacilitiesInfo } from "./facilites-info";
+export const Facilities = () => {
   const navigate = useNavigate();
   return (
     <>
       <div
         style={{
-          backgroundImage: `url(${roomImage})`,
+          backgroundImage: `url(${facilityImage})`,
         }}
         className="bg-cover">
         <div className="backdrop-brightness-50 h-screen w-full  pt-4 px-20">
@@ -41,7 +41,8 @@ export const HomeDisplay = () => {
           </div>
         </div>
       </div>
-      <HomeInfo />
+      <FacilitiesInfo />
+      <Footer />
     </>
   );
 };

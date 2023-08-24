@@ -21,7 +21,6 @@ async function getAllBooking(req, res, next) {
 async function getBookingByUserId(req, res, next) {
   try {
     let userId = req.params.userId;
-    console.log("getuserbookingid", userId);
     const bookings = await bookingService.getBookingByUserId(userId);
     res.json(bookings);
   } catch (err) {
@@ -30,7 +29,6 @@ async function getBookingByUserId(req, res, next) {
 }
 const deleteBooking = async function (req, res, next) {
   try {
-    console.log("Req delete booking", req.params.id);
     let bookingId = req.params.id;
     const booking = await bookingService.deleteBookingById(bookingId);
     return res.status(200).json(booking);
@@ -40,6 +38,7 @@ const deleteBooking = async function (req, res, next) {
 };
 async function updateBooking(req, res, next) {
   try {
+    console.log("update booking", req.params.id, req.body);
     const booking = await bookingService.updateBooking(
       req.params.id,
       req.body

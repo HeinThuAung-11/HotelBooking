@@ -9,6 +9,7 @@ import {
   selectBooking,
 } from "../features/authSlice";
 import { getBookingByUserId } from "../features/authApi";
+import EditBookiing from "./editbooking";
 
 const style = {
   position: "absolute",
@@ -24,46 +25,8 @@ const style = {
   pb: 3,
 };
 
-function ChildModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <React.Fragment>
-      <Button
-        variant="outlined"
-        onClick={handleOpen}
-        className="w-[165px] h-[40px]"
-        sx={{
-          color: "#ffffff", // Text color
-          borderColor: "#14274A", // Updated border color
-          backgroundColor: "#14274A", // Background color
-          "&:hover": {
-            backgroundColor: "#0F1E3B", // Darker background color on hover
-          },
-        }}>
-        Edit Booking
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description">
-        <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Text in a child modal</h2>
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-          <Button onClick={handleClose}>Close Child Modal</Button>
-        </Box>
-      </Modal>
-    </React.Fragment>
-  );
+function ChildModal({ booking }) {
+  return <EditBookiing booking={booking} />;
 }
 
 export default function ProfileModal({ open, handleClose, userId }) {
@@ -152,7 +115,7 @@ export default function ProfileModal({ open, handleClose, userId }) {
                       </h5>
                     </div>
                     <div className="flex mt-3">
-                      <ChildModal />
+                      <ChildModal booking={booking} />
                       <Button
                         variant="outlined"
                         className="w-[175px] h-[40px]"

@@ -46,7 +46,7 @@ async function deleteBookingById(bookingId) {
   return bookings;
 }
 async function updateBooking(id, bookingData) {
-  const updatedBooking = await Room.findByIdAndUpdate(
+  const updatedBooking = await Bookings.findByIdAndUpdate(
     id,
     bookingData,
     {
