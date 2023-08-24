@@ -1,6 +1,6 @@
 ## Hotel Booking System
 
-This is a full-stack hotel booking system built with React, Redux, Ant Design, Node.js, Express.js, and MongoDB.
+This is a full-stack hotel booking system built with React, Redux, Material UI, Node.js, Express.js, and MongoDB.
 
 ## Features
 
