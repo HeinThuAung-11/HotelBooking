@@ -49,7 +49,7 @@ export const Register = () => {
   useEffect(() => {
     console.log("token", token);
     if (token) {
-      navigate("/roomdisplay");
+      navigate("/room-display");
     }
   });
   return (

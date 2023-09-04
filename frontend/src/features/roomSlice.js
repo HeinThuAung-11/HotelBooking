@@ -18,7 +18,6 @@ export const roomSlice = createSlice({
   initialState,
   reducers: {
     filteringRooms: (state, action) => {
-      console.log("filtering roonms", state, action);
       state.filteredRooms = action.payload;
     },
     cancelFilteredRooms: (state) => {

@@ -29,7 +29,7 @@ export const Login = () => {
   useEffect(() => {
     console.log("token", token);
     if (token) {
-      navigate("/roomdisplay");
+      navigate("/room-display");
     }
   });
   console.log("status", status);
